@@ -25,24 +25,14 @@ void wyswietl_menu()
     switch(wybor)
     {
         case 1: 
-        cout<<"wyswietlam skoroszyt"<<endl;
-        cout<<"*****************************"<<endl;
         wyswietl_tab();
-        
         break;
         
         case 2: 
-        cout<<"tworze nowe komorki, podaj rozmiar"<<endl;
-        cout<<"Najpierw ilosc wierszy:"<<endl;
-        cin>>wiersze;
-        cout<<"Teraz ilosc kolumn:"<<endl;
-        cin>>kolumny;
         tworzenie_tablicy(wiersze,kolumny);
-        
         break;
         
         case 3: 
-        cout<<"usuwam stare komorki"<<endl;
         void usuwanie(int **macierz);
         break;
         

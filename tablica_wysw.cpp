@@ -6,6 +6,9 @@ using namespace std;
 
 void wyswietl_tab()
 {
+  cout<<"wyswietlam skoroszyt"<<endl;
+        cout<<"*****************************"<<endl;
+  
   /*
   cout<<"macierz "<< wiersze << 'x' << kolumny << endl;
          for(int i=0; i<wiersze; i++)
