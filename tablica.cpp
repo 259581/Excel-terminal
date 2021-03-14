@@ -1,6 +1,30 @@
 #include <iostream>
 #include "tablica.h"
-int dodaj(int liczba)
+#include "menu.h"
+#include "tablica_wysw.h"
+using namespace std;
+
+int ** tworzenie_tablicy(int wiersze,int kolumny)
 {
-    return 0;
+    int** macierz = new int*[wiersze];
+
+    for(int i=0; i<wiersze;i++)
+    {
+       macierz[i]=new int[kolumny];
+    }
+
+    for(int i=0;i<wiersze; i++)
+    {
+        for(int j=0;j<kolumny; j++)
+        {
+            
+            macierz[i][j] = 1;
+        }
+    }
+    
+    return macierz;
+}
+void usuwanie(int **macierz)
+{
+    delete macierz;
 }
