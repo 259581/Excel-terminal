@@ -1,6 +1,6 @@
-#include "funkcje.h"
+#include <iostream>
+#include "tablica.h"
 int dodaj(int liczba)
 {
-    int wartosc=(liczba+2);
-    return wartosc;
+    return 0;
 }

@@ -1,10 +1,10 @@
 #include <iostream>
-#include "funkcje.h"
+#include "tablica.h"
+#include "menu.h"
+#include "tablica_wysw.h"
 using namespace std;
 
-int main(){
-    int a=2;
-    cout << "Hello world" << endl;
-    a=dodaj(3);
-    cout<<a<<endl;
+int main()
+{
+    return 0;
 }
