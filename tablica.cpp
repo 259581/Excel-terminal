@@ -6,11 +6,7 @@ using namespace std;
 
 int ** tworzenie_tablicy(int wiersze,int kolumny)
 {
-    cout<<"tworze nowe komorki, podaj rozmiar"<<endl;
-    cout<<"Najpierw ilosc wierszy:"<<endl;
-    cin>>wiersze;
-    cout<<"Teraz ilosc kolumn:"<<endl;
-    cin>>kolumny;
+    
     
     
     
@@ -30,11 +26,21 @@ int ** tworzenie_tablicy(int wiersze,int kolumny)
         }
     }
     
+    cout<<"macierz "<< wiersze << 'x' << kolumny << endl;
+         for(int i=0; i<wiersze; i++)
+         {
+             for(int j=0; j<kolumny; j++)
+             {
+                 cout<<macierz[i][j]<<'\t';
+
+             }
+         cout<<endl;
+         }
     return macierz;
 }
-void usuwanie(int **macierz)
+void zmiana_wartosci(int **macierz)
 {
-    cout<<"usuwam stare komorki"<<endl;
-    delete macierz;
+    
+    
     
 }

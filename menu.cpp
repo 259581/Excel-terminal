@@ -11,12 +11,14 @@ using namespace std;
     int wybor;
 void wyswietl_menu()
 {
-    int wiersze = 0;
-    int kolumny = 0;
+   
+    int **macierz;
+    int kolumny;
+    int wiersze;
     do{
     cout<<"Co chcesz zrobic? Podaj odpowiednia liczbe."<<endl;
     cout<<"1-wyswietl skoroszyt"<<endl;
-    cout<<"2-stworz nowe komorki"<<endl;
+    cout<<"2-stworz nowa tablice"<<endl;
     cout<<"3-usun stare komorki"<<endl;
     cout<<"4-wyjdz"<<endl;
     cin>>wybor;
@@ -25,15 +27,19 @@ void wyswietl_menu()
     switch(wybor)
     {
         case 1: 
-        wyswietl_tab();
+        //wyswietl_tab(int **macierz, int wiersze, int kolumny);
         break;
         
         case 2: 
-        tworzenie_tablicy(wiersze,kolumny);
+        cout<<"Podaj liczbe wierszy"<<endl;
+        cin>>wiersze;
+        cout<<"Podaj liczbe kolumn"<<endl;
+        cin>>kolumny;
+        macierz = tworzenie_tablicy(wiersze,kolumny);
         break;
         
         case 3: 
-        void usuwanie(int **macierz);
+        
         break;
         
         case 4:

@@ -4,12 +4,12 @@
 #include "menu.h"
 using namespace std;
 
-void wyswietl_tab()
+void wyswietl_tab(int **macierz, int wiersze, int kolumny)
 {
   cout<<"wyswietlam skoroszyt"<<endl;
         cout<<"*****************************"<<endl;
   
-  /*
+  
   cout<<"macierz "<< wiersze << 'x' << kolumny << endl;
          for(int i=0; i<wiersze; i++)
          {
@@ -22,5 +22,5 @@ void wyswietl_tab()
          }
    
    cout<<"tablica sie wyswietlila"<<endl;
-    */
+
 }
