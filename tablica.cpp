@@ -7,10 +7,10 @@ using namespace std;
 int ** tworzenie_tablicy(int wiersze,int kolumny)
 {
     cout<<"tworze nowe komorki, podaj rozmiar"<<endl;
-        cout<<"Najpierw ilosc wierszy:"<<endl;
-        cin>>wiersze;
-        cout<<"Teraz ilosc kolumn:"<<endl;
-        cin>>kolumny;
+    cout<<"Najpierw ilosc wierszy:"<<endl;
+    cin>>wiersze;
+    cout<<"Teraz ilosc kolumn:"<<endl;
+    cin>>kolumny;
     
     
     
@@ -36,4 +36,5 @@ void usuwanie(int **macierz)
 {
     cout<<"usuwam stare komorki"<<endl;
     delete macierz;
+    
 }

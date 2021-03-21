@@ -9,5 +9,7 @@ using namespace std;
 
 int main()
 {
+   
    wyswietl_menu();
+   
 }
