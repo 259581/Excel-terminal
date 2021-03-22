@@ -1,33 +1,24 @@
 ## Projekt arkusza kalkulacyjnego 
 interfejs:
-	-wyświetlanie opcji użytkownikowi
-		*komendy (pobieranie danych z klawiatury użytkownika)
-			-aktualny stan programu
-			-wyświetlanie skoroszytu na ekranie
-			-tworzenie nowych komórek
-			-kasowanie komórek
-			-modyfikacja istniejących komórek
-			
+		-komunikacja z użytkownikiem
+		-wydawanie poleceń programowi
+		-wywoływanie funkcji
+		
 			
 	
 		
-część właściwa:
+arkusz:
 	
-		*regulacja wielkości tablicy
-			-dynamiczna alokacja
-			-wskaźnik
+		-stworzenie nowego arkusza
+		-regulacja wielkości tablicy
+		-aktualizacja zawartości poszczególnych komórek
 		
-		*wykonywanie obliczeń
 		
-		*przekazywanie informacji między tablicami
-		
-		*zapisywanie informacji na dysku
-			-zapis skoroszytu do pliku teksowego
-		
-		*funkcja wprowadzająca dane do tablicy
-			-wykorzystanie adresów komórek
-		*kasowanie elementów tablicy
-	
+pliki:
+		-zapis arkusza do pliku tekstowego
+			-void zapis(ofstream& plik, int **macierz);
+		-odczyt arkusza z pliku tekstowego 
+			-int **odczyt(ifstream& plik);	
 		
 			
 		

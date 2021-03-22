@@ -2,6 +2,7 @@
 #include "tablica_wysw.h"
 #include "tablica.h"
 #include "menu.h"
+#include "pliki.h"
 using namespace std;
 
 void wyswietl_tab(int **macierz, int wiersze, int kolumny)

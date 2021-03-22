@@ -4,6 +4,7 @@
 #include "tablica_wysw.h"
 #include <cstdlib>
 #include <stdlib.h>
+#include "pliki.h"
 
 using namespace std;
 
