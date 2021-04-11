@@ -5,7 +5,7 @@
 #include "pliki.h"
 using namespace std;
 
-void wyswietl_tab(int **macierz, int wiersze, int kolumny)
+void wyswietl_tab(double **macierz, int wiersze, int kolumny)
 {
   cout<<"wyswietlam skoroszyt"<<endl;
         cout<<"*****************************"<<endl;

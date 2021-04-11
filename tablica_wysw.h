@@ -7,5 +7,5 @@
  * @param[in] ilosc_wierszy - ilość wierszy arkusza
  * @param[in] ilosc_kolumn - ilość kolumn arkusza
  */
-void wyswietl_tab(int **macierz, int wiersze, int kolumny);
+void wyswietl_tab(double **macierz, int wiersze, int kolumny);
 #endif

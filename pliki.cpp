@@ -9,53 +9,66 @@
 using namespace std;
 
 
-void zapis(std::ofstream& plik1, int **arkusz, int ilosc_wierszy, int ilosc_kolumn)
+void zapis(double **arkusz, int ilosc_wierszy, int ilosc_kolumn, string nazwa_pliku)
 {
+  nazwa_pliku+=".txt";
+  ofstream (plik1);
   
-  plik1.open("text1.txt");
+  plik1.open(nazwa_pliku);
    if(plik1.good()==true)
    { 
-   
+  
+  plik1<<ilosc_wierszy<<endl;
+  plik1<<ilosc_kolumn<<endl; 
+  
   for(int i=0; i<ilosc_wierszy; i++)
     {
         for(int j=0; j<ilosc_kolumn; j++)
         {
-            plik1 << arkusz[i][j]<<'\t';
+            plik1 << arkusz[i][j]<<"\t";
         }
-        cout<< endl;
+        plik1 << endl;
     }  
     plik1.close();
    }
    else exit(0);
 }
-int** odczyt(std::ifstream& plik2, int wiersze, int kolumny)
+double** odczyt(int *w, int *k, std::string nazwa_pliku)
 {
-    plik2.open("text1.txt");
+    double a=0;
+    nazwa_pliku+=".txt";
+    ifstream(plik2);
+    plik2.open(nazwa_pliku);
     if(plik2.good()==true)
     {
-    int a=0;
-    
-    plik2 >> wiersze;
-    plik2 >> kolumny;
-    int** macierz = new int*[wiersze];
+       
+        
+        plik2>>*w;
+        plik2>>*k;
+        
+        double** macierz = new double*[*w];
 
-    for(int i=0; i<wiersze;i++)
-    {
-       macierz[i]=new int[kolumny];
-    }
-
-    for(int i=0;i<wiersze; i++)
-    {
-        for(int j=0;j<kolumny; j++)
+        for(int i=0; i<*w;i++)
         {
-            plik2 >> a;
-            macierz[i][j] = a;
+            macierz[i]=new double[*k];
         }
+
+        for(int i=0;i<*w; i++)
+        {
+            for(int j=0;j<*k; j++)
+            {
+                plik2>>a;
+                macierz[i][j] = a;
+            }
     }
     return macierz;
     
     
     plik2.close();
     }
-    else exit(0);
+    else 
+    {
+    cout<<"podales zla nazwe pliku"<<endl;
+    }
+    
 }
