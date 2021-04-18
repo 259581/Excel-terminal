@@ -8,8 +8,9 @@
  * @param[in] arkusz - arkusz który zostanie zapisany
  * @param[in] ilosc_wierszy - ilość wierszy arkusza
  * @param[in] ilosc_kolumn - ilość kolumn arkusza
+ * @return wartość 0 oznacza prawidłowo wykonaną operację, a wartość 1 oznacza błąd
  */
-void zapis(double **arkusz, int ilosc_wierszy, int ilosc_kolumn, std::string nazwa_pliku);
+int zapis(double **arkusz, int ilosc_wierszy, int ilosc_kolumn, std::string nazwa_pliku);
 /**
  * @brief Ta funkcja służy do odczytu arkuszy z dysku, dokładnie z pliku tekstowego.
  * @param[out] arkusz - tablica dwuwymiarowa

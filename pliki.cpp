@@ -9,7 +9,7 @@
 using namespace std;
 
 
-void zapis(double **arkusz, int ilosc_wierszy, int ilosc_kolumn, string nazwa_pliku)
+int zapis(double **arkusz, int ilosc_wierszy, int ilosc_kolumn, string nazwa_pliku)
 {
   nazwa_pliku+=".txt";
   ofstream (plik1);
@@ -28,10 +28,15 @@ void zapis(double **arkusz, int ilosc_wierszy, int ilosc_kolumn, string nazwa_pl
             plik1 << arkusz[i][j]<<"\t";
         }
         plik1 << endl;
-    }  
+    } 
+    return 1; 
     plik1.close();
+    
    }
-   else exit(0);
+   else
+   {
+    return 0;
+   }
 }
 double** odczyt(int *w, int *k, std::string nazwa_pliku)
 {

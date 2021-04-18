@@ -25,6 +25,7 @@ void menu_tekst()
 void wyswietl_menu()
 {
     
+    int b = 0;
     double **macierz;
     int ilosc_kolumn = 0;
     int ilosc_wierszy = 0;
@@ -58,7 +59,17 @@ void wyswietl_menu()
                 cout<<"Zapisywanie na dysk"<<endl;
                 cout<<"Podaj nazwe pliku bez rozszerzenia, do ktorego chcesz zapisac arkusz"<<endl;
                 cin>>nazwa_pliku;
-                zapis(macierz,ilosc_wierszy,ilosc_kolumn,nazwa_pliku);
+                 
+                b = zapis(macierz,ilosc_wierszy,ilosc_kolumn,nazwa_pliku);
+                if(b==1)
+                {
+                    cout<<"operacja wykonana poprawnie"<<endl;
+                }
+                else
+                {
+                    cout<<"blad. operacja nie zostala wykonana"<<endl;
+                }
+                
             break;
             
             case 4:
