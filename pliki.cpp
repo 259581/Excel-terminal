@@ -9,37 +9,43 @@
 using namespace std;
 
 
-int zapis(double **arkusz, int ilosc_wierszy, int ilosc_kolumn, string nazwa_pliku)
+int zapis(struct p_a arkusz, string nazwa_pliku) //poprawic tabulatory
 {
-  nazwa_pliku+=".txt";
-  ofstream (plik1);
+    nazwa_pliku+=".txt";
+    ofstream (plik1);
   
-  plik1.open(nazwa_pliku);
-   if(plik1.good()==true)
-   { 
-  
-  plik1<<ilosc_wierszy<<endl;
-  plik1<<ilosc_kolumn<<endl; 
-  
-  for(int i=0; i<ilosc_wierszy; i++)
+    plik1.open(nazwa_pliku);
+    if(plik1.good()==true)
     {
-        for(int j=0; j<ilosc_kolumn; j++)
-        {
-            plik1 << arkusz[i][j]<<"\t";
-        }
-        plik1 << endl;
-    } 
-    return 1; 
-    plik1.close();
     
-   }
-   else
-   {
-    return 0;
-   }
+        plik1<<arkusz.ilosc_wierszy<<endl;
+        plik1<<arkusz.ilosc_kolumn<<endl; 
+    
+        for(int i=0; i<arkusz.ilosc_wierszy; i++)
+        {
+            for(int j=0; j<arkusz.ilosc_kolumn; j++)
+            {
+                plik1 << arkusz.macierz[i][j]<<"\t";
+            }
+            plik1 << endl;
+        } 
+        
+        plik1.close();
+        return 0;
+    }
+    else
+    {
+        return 1;
+    }
+    
+    
+   
 }
-double** odczyt(int *w, int *k, std::string nazwa_pliku)
+
+int odczyt(struct p_a *arkusz, std::string nazwa_pliku) 
 {
+    int nlw=0;
+    int nlk=0;
     double a=0;
     nazwa_pliku+=".txt";
     ifstream(plik2);
@@ -48,32 +54,40 @@ double** odczyt(int *w, int *k, std::string nazwa_pliku)
     {
        
         
-        plik2>>*w;
-        plik2>>*k;
+        plik2>>nlw;
+        plik2>>nlk;
         
-        double** macierz = new double*[*w];
+        
 
-        for(int i=0; i<*w;i++)
+        double** sheet = new double*[nlw];
+
+        for(int i=0; i<nlw;i++)
         {
-            macierz[i]=new double[*k];
+            sheet[i]=new double[nlk];
         }
 
-        for(int i=0;i<*w; i++)
+         arkusz->macierz = aktualizacja_rozmiaru(sheet, arkusz->ilosc_wierszy, arkusz->ilosc_kolumn, nlw, nlk);
+        
+
+        for(int i=0;i<nlw; i++)
         {
-            for(int j=0;j<*k; j++)
+            for(int j=0;j<nlk; j++)
             {
                 plik2>>a;
-                macierz[i][j] = a;
+                arkusz->macierz[i][j] = a;
             }
-    }
-    return macierz;
+        }
+      
     
     
-    plik2.close();
+        arkusz->ilosc_wierszy = nlw;
+        arkusz->ilosc_kolumn = nlk;
+        plik2.close();
+        return 0;
     }
     else 
     {
-    cout<<"podales zla nazwe pliku"<<endl;
+        return 1;
     }
     
 }

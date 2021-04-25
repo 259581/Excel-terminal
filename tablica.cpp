@@ -5,18 +5,70 @@
 #include "pliki.h"
 using namespace std;
 
-double **tworzenie_tablicy(int ilosc_wierszy,int ilosc_kolumn)
+double** tworzenie_tablicy(int ilosc_wierszy,int ilosc_kolumn)
 {
     
     
     
     
-    double** macierz = new double*[ilosc_wierszy];
+    double **arkusz = new double*[ilosc_wierszy];
 
     for(int i=0; i<ilosc_wierszy;i++)
     {
-       macierz[i]=new double[ilosc_kolumn];
+       arkusz[i]=new double[ilosc_kolumn];
     }
+
+    zerowanie_tablicy(arkusz, ilosc_wierszy, ilosc_kolumn);
+
+    return arkusz;
+    
+    
+    
+    
+}
+int zmiana_wartosci(struct p_a arkusz, int numer_wiersza, int numer_kolumny, double a)
+{
+   if((arkusz.ilosc_wierszy<=numer_wiersza || arkusz.ilosc_kolumn<=numer_kolumny))
+    {
+        return 1;
+    }
+    else
+    {
+        arkusz.macierz[(numer_wiersza)-1][(numer_kolumny)-1] = a;
+        return 0;
+    }
+   
+}
+double **aktualizacja_rozmiaru(double **macierz, int ilosc_wierszy,int ilosc_kolumn, int nlw, int nlk)
+{
+    double **kopia = tworzenie_tablicy(nlw, nlk);
+    
+    if((ilosc_wierszy<=nlw || ilosc_kolumn<=nlk))
+    {
+        kopiowanie(kopia, macierz, ilosc_wierszy, ilosc_kolumn);
+    }
+    else
+    {
+        kopiowanie(kopia, macierz, nlw, nlk);
+    }
+    
+    
+    return kopia; 
+    
+}
+void kopiowanie(double **macierz_wyj, double **macierz_wej, int ilosc_wierszy, int ilosc_kolumn)
+{
+    for(int i = 0; i<ilosc_wierszy; i++)
+    {
+        for(int j = 0; j<ilosc_kolumn; j++)
+        {
+            macierz_wyj[i][j] = macierz_wej[i][j];
+        }
+    }
+}
+void zerowanie_tablicy(double **macierz, int ilosc_wierszy, int ilosc_kolumn)
+
+{
 
     for(int i=0;i<ilosc_wierszy; i++)
     {
@@ -26,36 +78,8 @@ double **tworzenie_tablicy(int ilosc_wierszy,int ilosc_kolumn)
             macierz[i][j] = 0;
         }
     }
-    
-    return macierz;
 }
-void zmiana_wartosci(double **macierz, int numer_wiersza, int numer_kolumny, double a)
+void dodawanie(double a, int numer_wiersza, int numer_kolumny, double **macierz)
 {
-   macierz[(numer_wiersza)-1][(numer_kolumny)-1] = a;
-}
-double **aktualizacja_rozmiaru(double **macierz, int nlw, int nlk, int ilosc_wierszy, int ilosc_kolumn)
-{
-    double **kopia = tworzenie_tablicy(nlw, nlk);
-    if((ilosc_wierszy<=nlw || ilosc_kolumn<=nlk))
-    {
-        kopiowanie(kopia, macierz, ilosc_wierszy, ilosc_kolumn);
-    }
-    else
-    {
-       kopiowanie(kopia, macierz, nlw, nlk);
-    }
-    
-    
-    return kopia; 
-    
-}
-void kopiowanie(double **macierz1, double **macierz2, int ilosc_wierszy, int ilosc_kolumn)
-{
-    for(int i = 0; i<ilosc_wierszy; i++)
-    {
-        for(int j = 0; j<ilosc_kolumn; j++)
-        {
-            macierz1[i][j] = macierz2[i][j];
-        }
-    }
+    macierz[(numer_wiersza)-1][(numer_kolumny)-1] += a;
 }

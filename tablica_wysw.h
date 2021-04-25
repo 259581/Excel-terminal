@@ -3,9 +3,7 @@
 #define TABLICA_WYSW_H_INCLUDED
 /**
  * \brief Funkcja służąca do wyświetlania arkusza. 
- * @param[in] macierz - tablica dwuwymiarowa
- * @param[in] ilosc_wierszy - ilość wierszy arkusza
- * @param[in] ilosc_kolumn - ilość kolumn arkusza
+ * @param[in] arkusz - struktura zawierająca arkusz oraz informacje o ilości wierszy i kolumn
  */
-void wyswietl_tab(double **macierz, int wiersze, int kolumny);
+void wyswietl_tab(struct p_a arkusz);
 #endif

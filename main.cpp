@@ -10,7 +10,10 @@ using namespace std;
 
 int main()
 {
-   
-   wyswietl_menu();
+   p_a arkusz;
+   arkusz.macierz = 0;
+   arkusz.ilosc_wierszy = 0;
+   arkusz.ilosc_kolumn = 0;
+   wyswietl_menu(arkusz);
    
 }

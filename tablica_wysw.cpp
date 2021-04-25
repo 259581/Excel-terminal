@@ -5,23 +5,22 @@
 #include "pliki.h"
 using namespace std;
 
-void wyswietl_tab(double **macierz, int wiersze, int kolumny)
+void wyswietl_tab(struct p_a arkusz)
 {
-  cout<<"wyswietlam skoroszyt"<<endl;
-        cout<<"*****************************"<<endl;
+  
+    
   
   
-  cout<<"macierz "<< wiersze << 'x' << kolumny << endl;
-         for(int i=0; i<wiersze; i++)
+  cout<<"macierz "<< arkusz.ilosc_wierszy << 'x' << arkusz.ilosc_kolumn << endl;
+         for(int i=0; i<arkusz.ilosc_wierszy; i++)
          {
-             for(int j=0; j<kolumny; j++)
+             for(int j=0; j<arkusz.ilosc_kolumn; j++)
              {
-                 cout<<macierz[i][j]<<'\t';
+                 cout<<arkusz.macierz[i][j]<<'\t';
 
              }
          cout<<endl;
          }
    
-   cout<<"tablica sie wyswietlila"<<endl;
-
+   
 }

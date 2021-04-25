@@ -9,6 +9,9 @@
 #include <string>
 using namespace std;
 int wybor;
+
+
+
 void menu_tekst()
 {
         cout<<"Co chcesz zrobic? Podaj odpowiednia liczbe."<<endl;
@@ -19,64 +22,71 @@ void menu_tekst()
         cout<<"5-zmien wartosc w arkuszu"<<endl;
         cout<<"6-zmien rozmiar tablicy"<<endl;
         cout<<"7-wyczysc ekran"<<endl;
-        cout<<"8-wyjdz"<<endl;
+        cout<<"8-dodaj wartosc do komorki"<<endl;
+        cout<<"9-wyjdz"<<endl;
         cin>>wybor;
 }
-void wyswietl_menu()
+void wyswietl_menu(struct p_a arkusz)
 {
-    
-    int b = 0;
-    double **macierz;
-    int ilosc_kolumn = 0;
-    int ilosc_wierszy = 0;
     int numer_wiersza = 0;
     int numer_kolumny = 0;
+    int err_change_value = 0;
+    int err_file_save = 0;
+    int err_file_read = 0;
+    int b = 0;
     int nlw = 0;    //nowa liczba wierszy
     int nlk = 0;    //nowa liczba kolumn   
     double a=0;
-    int *w = &ilosc_wierszy;
-    int *k = &ilosc_kolumn;
+    int *w = &arkusz.ilosc_wierszy;
+    int *k = &arkusz.ilosc_kolumn;
     string nazwa_pliku;
+    
     do{
         menu_tekst();
         switch(wybor)
         {
             case 1: 
-                
                 cout<<"Podaj liczbe wierszy"<<endl;
-                cin>>ilosc_wierszy;
+                cin>>arkusz.ilosc_wierszy;
                 cout<<"Podaj liczbe kolumn"<<endl;
-                cin>>ilosc_kolumn;
-                macierz = tworzenie_tablicy(ilosc_wierszy,ilosc_kolumn);
-            
+                cin>>arkusz.ilosc_kolumn;
+                arkusz.macierz = tworzenie_tablicy(arkusz.ilosc_wierszy, arkusz.ilosc_kolumn);    //OGARNĄĆ STRUKTURY, COŚ PRZEROBIĆ NA STRUKTURY, NIE ZWRACAĆ STRUKTURY RETURNEM
+                
             break;
             
             case 2: 
-                wyswietl_tab(macierz,ilosc_wierszy,ilosc_kolumn);
+                wyswietl_tab(arkusz);
             break;
             
             case 3: 
-                cout<<"Zapisywanie na dysk"<<endl;
                 cout<<"Podaj nazwe pliku bez rozszerzenia, do ktorego chcesz zapisac arkusz"<<endl;
                 cin>>nazwa_pliku;
-                 
-                b = zapis(macierz,ilosc_wierszy,ilosc_kolumn,nazwa_pliku);
-                if(b==1)
+                err_file_save = zapis(arkusz,nazwa_pliku);
+                if(err_file_save==0)
                 {
                     cout<<"operacja wykonana poprawnie"<<endl;
                 }
                 else
                 {
                     cout<<"blad. operacja nie zostala wykonana"<<endl;
+                    cout<<"err_file_save"<<endl;
                 }
                 
             break;
             
             case 4:
-                cout<<"Odczyt z dysku"<<endl;
                 cout<<"Podaj nazwe pliku bez rozszerzenia, z ktorego chcesz odczytac arkusza"<<endl;
                 cin>>nazwa_pliku;
-                macierz = odczyt(w, k, nazwa_pliku);
+                err_file_read = odczyt(&arkusz, nazwa_pliku);
+                if(err_file_read==0)
+                {
+                    cout<<"operacja wykonana poprawnie"<<endl;
+                }
+                else
+                {
+                    cout<<"blad. operacja nie zostala wykonana"<<endl;
+                    cout<<"err_file_save"<<endl;
+                }
                 
                 
             break;
@@ -89,7 +99,17 @@ void wyswietl_menu()
                 cin>>numer_wiersza;
                 cout<<"Podaj numer kolumny"<<endl;
                 cin>>numer_kolumny;
-                zmiana_wartosci(macierz,numer_wiersza, numer_kolumny, a);
+                err_change_value = zmiana_wartosci(arkusz, numer_wiersza, numer_kolumny, a);
+                if(err_change_value==0)
+                {
+                    cout<<"Powodzenie!"<<endl;
+                }
+                else
+                {
+                    cout<<"niepowodzenie"<<endl;
+                    cout<<"err_change_value"<<endl;
+                }
+                
             break;
             
             case 6:
@@ -100,9 +120,9 @@ void wyswietl_menu()
                 cin>>nlw;
                 cout<<"Teraz liczba kolumn:"<<endl;
                 cin>>nlk;
-                macierz = aktualizacja_rozmiaru(macierz, nlw, nlk, ilosc_wierszy, ilosc_kolumn);
-                ilosc_wierszy = nlw;
-                ilosc_kolumn = nlk;
+                arkusz.macierz = aktualizacja_rozmiaru(arkusz.macierz, arkusz.ilosc_wierszy, arkusz.ilosc_kolumn, nlw, nlk);
+                arkusz.ilosc_wierszy = nlw;
+                arkusz.ilosc_kolumn = nlk;
                 
                 break;
             
@@ -111,13 +131,18 @@ void wyswietl_menu()
                 break;
             
             case 8:
+                cout<<"Podaj liczbe jaka chcesz dodac:";
+                cin>>a;
+                dodawanie(a,arkusz.ilosc_wierszy, arkusz.ilosc_kolumn, arkusz.macierz);
+                cout<<"sukces, dodales:"<<a<<endl;
+                break;
+            case 9:
                 system("clear");
                 break;
-            
             default:
             cout<<"Podales zla liczbe, podaj ponownie"<<endl;
             
         }
     }
-    while(wybor != 8);
+    while(wybor != 9);
 }
