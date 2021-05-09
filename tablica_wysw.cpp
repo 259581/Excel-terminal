@@ -5,7 +5,7 @@
 #include "pliki.h"
 using namespace std;
 
-void wyswietl_tab(struct p_a arkusz)
+void wyswietl_tab(class p_a arkusz)
 {
   
     

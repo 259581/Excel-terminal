@@ -24,24 +24,28 @@ void menu_tekst()
         cout<<"7-wyczysc ekran"<<endl;
         cout<<"8-dodaj wartosc do komorki"<<endl;
         cout<<"9-wyjdz"<<endl;
+        cout<<"0-policz srednia"<<endl;
         cin>>wybor;
 }
-void wyswietl_menu(struct p_a arkusz)
+void wyswietl_menu(p_a arkusz)
 {
+    char decyzja;
+    double suma;
     int numer_wiersza = 0;
     int numer_kolumny = 0;
     int err_change_value = 0;
+    int err_add_value = 0;
     int err_file_save = 0;
     int err_file_read = 0;
+    int err_liczenie_sredniej = 0;
     int b = 0;
+    int k = 0;
     int nlw = 0;    //nowa liczba wierszy
     int nlk = 0;    //nowa liczba kolumn   
     double a=0;
-    int *w = &arkusz.ilosc_wierszy;
-    int *k = &arkusz.ilosc_kolumn;
     string nazwa_pliku;
-    
-    do{
+    do
+    {
         menu_tekst();
         switch(wybor)
         {
@@ -50,7 +54,7 @@ void wyswietl_menu(struct p_a arkusz)
                 cin>>arkusz.ilosc_wierszy;
                 cout<<"Podaj liczbe kolumn"<<endl;
                 cin>>arkusz.ilosc_kolumn;
-                arkusz.macierz = tworzenie_tablicy(arkusz.ilosc_wierszy, arkusz.ilosc_kolumn);    //OGARNĄĆ STRUKTURY, COŚ PRZEROBIĆ NA STRUKTURY, NIE ZWRACAĆ STRUKTURY RETURNEM
+                arkusz.macierz = tworzenie_tablicy(arkusz.ilosc_wierszy, arkusz.ilosc_kolumn);  
                 
             break;
             
@@ -61,7 +65,7 @@ void wyswietl_menu(struct p_a arkusz)
             case 3: 
                 cout<<"Podaj nazwe pliku bez rozszerzenia, do ktorego chcesz zapisac arkusz"<<endl;
                 cin>>nazwa_pliku;
-                err_file_save = zapis(arkusz,nazwa_pliku);
+                err_file_save = arkusz.zapis(nazwa_pliku);
                 if(err_file_save==0)
                 {
                     cout<<"operacja wykonana poprawnie"<<endl;
@@ -77,7 +81,7 @@ void wyswietl_menu(struct p_a arkusz)
             case 4:
                 cout<<"Podaj nazwe pliku bez rozszerzenia, z ktorego chcesz odczytac arkusza"<<endl;
                 cin>>nazwa_pliku;
-                err_file_read = odczyt(&arkusz, nazwa_pliku);
+                err_file_read = arkusz.odczyt(nazwa_pliku);
                 if(err_file_read==0)
                 {
                     cout<<"operacja wykonana poprawnie"<<endl;
@@ -99,7 +103,7 @@ void wyswietl_menu(struct p_a arkusz)
                 cin>>numer_wiersza;
                 cout<<"Podaj numer kolumny"<<endl;
                 cin>>numer_kolumny;
-                err_change_value = zmiana_wartosci(arkusz, numer_wiersza, numer_kolumny, a);
+                err_change_value = arkusz.zmiana_wartosci(numer_wiersza, numer_kolumny, a);
                 if(err_change_value==0)
                 {
                     cout<<"Powodzenie!"<<endl;
@@ -120,7 +124,7 @@ void wyswietl_menu(struct p_a arkusz)
                 cin>>nlw;
                 cout<<"Teraz liczba kolumn:"<<endl;
                 cin>>nlk;
-                arkusz.macierz = aktualizacja_rozmiaru(arkusz.macierz, arkusz.ilosc_wierszy, arkusz.ilosc_kolumn, nlw, nlk);
+                arkusz.macierz = arkusz.aktualizacja_rozmiaru(nlw, nlk);
                 arkusz.ilosc_wierszy = nlw;
                 arkusz.ilosc_kolumn = nlk;
                 
@@ -133,14 +137,56 @@ void wyswietl_menu(struct p_a arkusz)
             case 8:
                 cout<<"Podaj liczbe jaka chcesz dodac:";
                 cin>>a;
-                dodawanie(a,arkusz.ilosc_wierszy, arkusz.ilosc_kolumn, arkusz.macierz);
-                cout<<"sukces, dodales:"<<a<<endl;
+                cout<<"Podaj numer wiersza"<<endl;
+                cin>>numer_wiersza;
+                cout<<"Podaj numer kolumny"<<endl;
+                cin>>numer_kolumny;
+                err_add_value = arkusz.dodawanie(numer_wiersza, numer_kolumny, a);
+                if(err_add_value==0)
+                {
+                    cout<<"Powodzenie!"<<endl;
+                }
+                else
+                {
+                    cout<<"niepowodzenie"<<endl;
+                    cout<<"err_add_value"<<endl;
+                }
                 break;
             case 9:
                 system("clear");
                 break;
+            case 0:
+                do
+                {
+                    cout<<"Podaj liczby z jakich ma byc obliczona srednia:";
+                    k++;
+                    cin>>a;
+                    suma += a;
+                    cout<<"Jeszcze jedna liczba?"<<endl;
+                    cout<<"y/n"<<endl;
+                    cin>>decyzja;
+                } while (decyzja=='y');
+                
+                cout<<"Ktory wiersz?"<<endl;
+                cin>>numer_wiersza;
+
+                cout<<"Ktora kolumna?"<<endl;
+                cin>>numer_kolumny;
+                err_liczenie_sredniej = arkusz.liczenie_sredniej(numer_wiersza, numer_kolumny, suma, k);
+                if(err_liczenie_sredniej==0)
+                {
+                    cout<<"Powodzenie!"<<endl;
+                }
+                else
+                {
+                    cout<<"niepowodzenie"<<endl;
+                    cout<<"err_liczenie_sredniej"<<endl;
+                }
+                
+                break;
+            
             default:
-            cout<<"Podales zla liczbe, podaj ponownie"<<endl;
+                cout<<"Podales zla liczbe, podaj ponownie"<<endl;
             
         }
     }

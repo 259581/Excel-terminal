@@ -5,5 +5,5 @@
  * \brief Funkcja służąca do wyświetlania arkusza. 
  * @param[in] arkusz - struktura zawierająca arkusz oraz informacje o ilości wierszy i kolumn
  */
-void wyswietl_tab(struct p_a arkusz);
+void wyswietl_tab(class p_a arkusz);
 #endif

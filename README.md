@@ -8,16 +8,22 @@
 			int ** tworzenie_tablicy(int ilosc_wierszy, int ilosc_kolumn);
 		
 		-regulacja wielkości tablicy
-			double **aktualizacja_rozmiaru(double **macierz, int nlw, int nlk, int ilosc_wierszy, int ilosc_kolumn);
+			double **aktualizacja_rozmiaru(int nlw, int nlk);
 			
 		-aktualizacja zawartości poszczególnych komórek
-			void zmiana_wartosci(double **macierz, int numer_wiersza, int numer_kolumny, double a);
+			int zmiana_wartosci(int numer_wiersza, int numer_kolumny, double a);
+		-liczenie średniej z konkretnych liczb
+			int liczenie_sredniej(int numer_wiersza, int numer_kolumny, double suma, int ilosc_liczb);
+## klasa
+		-klasa p_a na podstawie, której opiera się działanie programu
+		-został stworzony obiekt "arkusz"	
+			p_a arkusz;
 ## pliki:
 		-zapis arkusza do pliku tekstowego
-			void zapis(double **arkusz, int ilosc_wierszy, int ilosc_kolumn, string nazwa_pliku);
+			void zapis(class p_a arkusz, std::string nazwa_pliku);
 		
 		-odczyt arkusza z pliku tekstowego 
-			double** odczyt(int *w, int *k, std::string nazwa_pliku);	
+			double** odczyt(class p_a *arkusz std::string nazwa_pliku);	
 		
 			
 		

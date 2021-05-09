@@ -9,7 +9,7 @@
 using namespace std;
 
 
-int zapis(struct p_a arkusz, string nazwa_pliku) //poprawic tabulatory
+int p_a::zapis(string nazwa_pliku) 
 {
     nazwa_pliku+=".txt";
     ofstream (plik1);
@@ -18,14 +18,14 @@ int zapis(struct p_a arkusz, string nazwa_pliku) //poprawic tabulatory
     if(plik1.good()==true)
     {
     
-        plik1<<arkusz.ilosc_wierszy<<endl;
-        plik1<<arkusz.ilosc_kolumn<<endl; 
+        plik1<<ilosc_wierszy<<endl;
+        plik1<<ilosc_kolumn<<endl; 
     
-        for(int i=0; i<arkusz.ilosc_wierszy; i++)
+        for(int i=0; i<ilosc_wierszy; i++)
         {
-            for(int j=0; j<arkusz.ilosc_kolumn; j++)
+            for(int j=0; j<ilosc_kolumn; j++)
             {
-                plik1 << arkusz.macierz[i][j]<<"\t";
+                plik1 << macierz[i][j]<<"\t";
             }
             plik1 << endl;
         } 
@@ -42,7 +42,7 @@ int zapis(struct p_a arkusz, string nazwa_pliku) //poprawic tabulatory
    
 }
 
-int odczyt(struct p_a *arkusz, std::string nazwa_pliku) 
+int p_a::odczyt(std::string nazwa_pliku) 
 {
     int nlw=0;
     int nlk=0;
@@ -66,7 +66,7 @@ int odczyt(struct p_a *arkusz, std::string nazwa_pliku)
             sheet[i]=new double[nlk];
         }
 
-         arkusz->macierz = aktualizacja_rozmiaru(sheet, arkusz->ilosc_wierszy, arkusz->ilosc_kolumn, nlw, nlk);
+        this->macierz = this->aktualizacja_rozmiaru(nlw, nlk);
         
 
         for(int i=0;i<nlw; i++)
@@ -74,14 +74,14 @@ int odczyt(struct p_a *arkusz, std::string nazwa_pliku)
             for(int j=0;j<nlk; j++)
             {
                 plik2>>a;
-                arkusz->macierz[i][j] = a;
+                this->macierz[i][j] = a;
             }
         }
       
     
     
-        arkusz->ilosc_wierszy = nlw;
-        arkusz->ilosc_kolumn = nlk;
+        this->ilosc_wierszy = nlw;
+        this->ilosc_kolumn = nlk;
         plik2.close();
         return 0;
     }

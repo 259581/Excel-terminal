@@ -19,39 +19,37 @@ double** tworzenie_tablicy(int ilosc_wierszy,int ilosc_kolumn)
     }
 
     zerowanie_tablicy(arkusz, ilosc_wierszy, ilosc_kolumn);
-
     return arkusz;
     
     
     
     
 }
-int zmiana_wartosci(struct p_a arkusz, int numer_wiersza, int numer_kolumny, double a)
+int p_a::zmiana_wartosci(int numer_wiersza, int numer_kolumny, double a)
 {
-   if((arkusz.ilosc_wierszy<=numer_wiersza || arkusz.ilosc_kolumn<=numer_kolumny))
+   if((p_a::ilosc_wierszy<=numer_wiersza || p_a::ilosc_kolumn<=numer_kolumny))
     {
         return 1;
     }
     else
     {
-        arkusz.macierz[(numer_wiersza)-1][(numer_kolumny)-1] = a;
+        this->macierz[(numer_wiersza)-1][(numer_kolumny)-1] = a;
         return 0;
     }
    
 }
-double **aktualizacja_rozmiaru(double **macierz, int ilosc_wierszy,int ilosc_kolumn, int nlw, int nlk)
+double** p_a::aktualizacja_rozmiaru(int nlw, int nlk)
 {
     double **kopia = tworzenie_tablicy(nlw, nlk);
     
-    if((ilosc_wierszy<=nlw || ilosc_kolumn<=nlk))
+    if((p_a::ilosc_wierszy<=nlw || p_a::ilosc_kolumn<=nlk))
     {
-        kopiowanie(kopia, macierz, ilosc_wierszy, ilosc_kolumn);
+        kopiowanie(kopia, p_a::macierz, p_a::ilosc_wierszy, p_a::ilosc_kolumn);
     }
     else
     {
-        kopiowanie(kopia, macierz, nlw, nlk);
+        kopiowanie(kopia, p_a::macierz, nlw, nlk);
     }
-    
     
     return kopia; 
     
@@ -67,7 +65,6 @@ void kopiowanie(double **macierz_wyj, double **macierz_wej, int ilosc_wierszy, i
     }
 }
 void zerowanie_tablicy(double **macierz, int ilosc_wierszy, int ilosc_kolumn)
-
 {
 
     for(int i=0;i<ilosc_wierszy; i++)
@@ -79,7 +76,35 @@ void zerowanie_tablicy(double **macierz, int ilosc_wierszy, int ilosc_kolumn)
         }
     }
 }
-void dodawanie(double a, int numer_wiersza, int numer_kolumny, double **macierz)
+int p_a::dodawanie(int numer_wiersza, int numer_kolumny, double a)
 {
-    macierz[(numer_wiersza)-1][(numer_kolumny)-1] += a;
+    if((p_a::ilosc_wierszy<=numer_wiersza || p_a::ilosc_kolumn<=numer_kolumny))
+    {
+        return 1;
+    }
+    else
+    {
+        this->macierz[(numer_wiersza)-1][(numer_kolumny)-1] = this->macierz[(numer_wiersza)-1][(numer_kolumny)-1] + a;
+        return 0;
+    }
+   
+    
+}
+  int p_a::liczenie_sredniej(int numer_wiersza, int numer_kolumny, double suma, int ilosc_liczb)
+{
+      
+    
+    if((p_a::ilosc_wierszy<=numer_wiersza || p_a::ilosc_kolumn<=numer_kolumny))
+    {
+        return 1;
+    }
+    else
+    {
+      double srednia = suma/ilosc_liczb;
+      this->macierz[(numer_wiersza)-1][(numer_kolumny)-1] = srednia;
+      
+     
+      return 0;
+    }
+    
 }
