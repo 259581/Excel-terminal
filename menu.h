@@ -6,7 +6,7 @@
  * 
  * @param arkusz - struktura, na której opiera się praca całego programu.
  */
-void wyswietl_menu(class p_a arkusz);
+void wyswietl_menu(class Arkusz arkusz);
 /// \brief Ta funkcja wyświetla menu startowe programu.
 void menu_tekst();
 #endif

@@ -1,70 +1,95 @@
 #include <iostream>
 #include "tablica.h"
 #include "menu.h"
-#include "tablica_wysw.h"
 #include "pliki.h"
 using namespace std;
 
-double** tworzenie_tablicy(int ilosc_wierszy,int ilosc_kolumn)
+void Arkusz::nowa_tablica(int w, int k)
 {
+    this->ilosc_wierszy = w;
+    this->ilosc_kolumn = k;
+    this->macierz = tworzenie_tablicy(w, k);
+    this->macierz = zerowanie_tablicy();
+}
+Cell** Arkusz::tworzenie_tablicy(int w, int k)     
+{  
     
-    
-    
-    
-    double **arkusz = new double*[ilosc_wierszy];
+    Cell **arkusz = new Cell*[w];
 
-    for(int i=0; i<ilosc_wierszy;i++)
+    for(int i=0; i<w;i++)
     {
-       arkusz[i]=new double[ilosc_kolumn];
+       arkusz[i]=new Cell[k];
     }
 
-    zerowanie_tablicy(arkusz, ilosc_wierszy, ilosc_kolumn);
     return arkusz;
-    
-    
-    
-    
 }
-int p_a::zmiana_wartosci(int numer_wiersza, int numer_kolumny, double a)
+double Cell::getDoubleValue()
 {
-   if((p_a::ilosc_wierszy<=numer_wiersza || p_a::ilosc_kolumn<=numer_kolumny))
+    return poledouble;
+}
+double Cell::setDoubleValue(double wartosc)
+{
+    poledouble = wartosc;
+    return poledouble;
+}
+
+int Arkusz::zmiana_wartosci(int w, int k, double a)
+{
+   if((ilosc_wierszy<=w || ilosc_kolumn<=k))
     {
         return 1;
     }
     else
     {
-        this->macierz[(numer_wiersza)-1][(numer_kolumny)-1] = a;
+        this->macierz[w-1][k-1].setDoubleValue(a);
         return 0;
     }
-   
+  
 }
-double** p_a::aktualizacja_rozmiaru(int nlw, int nlk)
+
+Cell** Arkusz::aktualizacja_rozmiaru(int w, int k)
 {
-    double **kopia = tworzenie_tablicy(nlw, nlk);
-    
-    if((p_a::ilosc_wierszy<=nlw || p_a::ilosc_kolumn<=nlk))
+    Cell **kopia = tworzenie_tablicy(w, k);
+    for(int i=0;i<w; i++)
     {
-        kopiowanie(kopia, p_a::macierz, p_a::ilosc_wierszy, p_a::ilosc_kolumn);
+        for(int j=0;j<k; j++)
+        {    
+            kopia[i][j].setDoubleValue(0);
+        }
+    }
+    
+    if((ilosc_wierszy<=w || ilosc_kolumn<=k))
+    {
+        kopiowanie(macierz,kopia, ilosc_wierszy, ilosc_kolumn);
     }
     else
     {
-        kopiowanie(kopia, p_a::macierz, nlw, nlk);
+        kopiowanie(macierz,kopia, w, k);
     }
     
     return kopia; 
     
 }
-void kopiowanie(double **macierz_wyj, double **macierz_wej, int ilosc_wierszy, int ilosc_kolumn)
+void Arkusz::zmiana_rozmiaru(int w,int k)
 {
-    for(int i = 0; i<ilosc_wierszy; i++)
+    this->macierz = aktualizacja_rozmiaru(w,k);
+    this->ilosc_wierszy = w;
+    this->ilosc_kolumn = k;
+}
+
+void Arkusz::kopiowanie(Cell **macierz_wej,Cell** macierz_wyj, int w, int k)
+{
+    for(int i = 0; i<w; i++)
     {
-        for(int j = 0; j<ilosc_kolumn; j++)
+        for(int j = 0; j<k; j++)
         {
-            macierz_wyj[i][j] = macierz_wej[i][j];
+            macierz_wyj[i][j].setDoubleValue(macierz_wej[i][j].getDoubleValue());
         }
     }
 }
-void zerowanie_tablicy(double **macierz, int ilosc_wierszy, int ilosc_kolumn)
+
+
+Cell** Arkusz::zerowanie_tablicy()
 {
 
     for(int i=0;i<ilosc_wierszy; i++)
@@ -72,39 +97,94 @@ void zerowanie_tablicy(double **macierz, int ilosc_wierszy, int ilosc_kolumn)
         for(int j=0;j<ilosc_kolumn; j++)
         {
             
-            macierz[i][j] = 0;
+            this->macierz[i][j].setDoubleValue(0);
         }
     }
+    return macierz;
 }
-int p_a::dodawanie(int numer_wiersza, int numer_kolumny, double a)
+double Arkusz::sumowanie_wierszy(int w)
 {
-    if((p_a::ilosc_wierszy<=numer_wiersza || p_a::ilosc_kolumn<=numer_kolumny))
-    {
-        return 1;
-    }
-    else
-    {
-        this->macierz[(numer_wiersza)-1][(numer_kolumny)-1] = this->macierz[(numer_wiersza)-1][(numer_kolumny)-1] + a;
-        return 0;
-    }
-   
+    double a = 0;
+    double b = 0;
     
+    for(int j=0;j<ilosc_kolumn; j++)
+    {
+        a = macierz[w-1][j].getDoubleValue();
+        b = b + a;
+    }
+    
+  
+    return b;
 }
-  int p_a::liczenie_sredniej(int numer_wiersza, int numer_kolumny, double suma, int ilosc_liczb)
+double Arkusz::sumowanie_kolumn(int k)
 {
-      
+    double a = 0;
+    double b = 0;
     
-    if((p_a::ilosc_wierszy<=numer_wiersza || p_a::ilosc_kolumn<=numer_kolumny))
+    for(int i=0;i<ilosc_wierszy; i++)
     {
-        return 1;
-    }
-    else
-    {
-      double srednia = suma/ilosc_liczb;
-      this->macierz[(numer_wiersza)-1][(numer_kolumny)-1] = srednia;
-      
-     
-      return 0;
+        a = macierz[i][k-1].getDoubleValue();
+        b = b + a;
     }
     
+  
+    return b;
+}
+double Arkusz::naj_wart_wiersza(int w)
+{
+    double a = 0;
+    a = macierz[w-1][0].getDoubleValue();
+    for(int j=0;j<ilosc_kolumn-1; j++)
+    {
+        if(macierz[w-1][j].getDoubleValue()<macierz[w-1][j+1].getDoubleValue())
+        {
+            a = macierz[w-1][j+1].getDoubleValue();
+        }
+        
+    }
+    
+  
+    return a; 
+}
+double Arkusz::naj_wart_kolumny(int k)
+{
+    double a = 0;
+    a = macierz[0][k-1].getDoubleValue();
+    for(int i=0;i<ilosc_wierszy-1; i++)
+    {
+        if(macierz[i][k-1].getDoubleValue()<macierz[i+1][k-1].getDoubleValue())
+        {
+            a = macierz[i+1][k-1].getDoubleValue();
+        }
+        
+    }
+    
+  
+    return a; 
+}
+double Arkusz::srednia(int z, int d)
+{
+    double a = 0;
+    double b = 0;
+    if(d='w')
+    {
+        for(int j=0;j<ilosc_kolumn; j++)
+        {
+            a = macierz[z-1][j].getDoubleValue();
+            b = b + a;
+        }
+        b = b/ilosc_kolumn;
+        return b;
+    }
+    else if(d='k')
+    {
+        for(int i=0;i<ilosc_wierszy; i++)
+        {   
+            a = macierz[i][z-1].getDoubleValue();
+            b = b + a;
+        }
+        b = b/ilosc_wierszy;
+        return b;
+    }
+    return a;
 }

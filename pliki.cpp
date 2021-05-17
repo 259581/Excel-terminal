@@ -1,15 +1,13 @@
 #include <iostream>
 #include <fstream>
 #include "tablica.h"
-#include "tablica_wysw.h"
 #include "menu.h"
 #include <cstdlib>
 #include <string>
 #include "pliki.h"
 using namespace std;
 
-
-int p_a::zapis(string nazwa_pliku) 
+int Arkusz::zapis(string nazwa_pliku) 
 {
     nazwa_pliku+=".txt";
     ofstream (plik1);
@@ -25,7 +23,7 @@ int p_a::zapis(string nazwa_pliku)
         {
             for(int j=0; j<ilosc_kolumn; j++)
             {
-                plik1 << macierz[i][j]<<"\t";
+                plik1 << macierz[i][j].getDoubleValue()<<"\t";
             }
             plik1 << endl;
         } 
@@ -42,10 +40,10 @@ int p_a::zapis(string nazwa_pliku)
    
 }
 
-int p_a::odczyt(std::string nazwa_pliku) 
+int Arkusz::odczyt(std::string nazwa_pliku) 
 {
-    int nlw=0;
-    int nlk=0;
+    int w=0;
+    int k=0;
     double a=0;
     nazwa_pliku+=".txt";
     ifstream(plik2);
@@ -54,34 +52,28 @@ int p_a::odczyt(std::string nazwa_pliku)
     {
        
         
-        plik2>>nlw;
-        plik2>>nlk;
+        plik2>>w;
+        plik2>>k;
         
         
+        
+        
+        this->macierz = aktualizacja_rozmiaru(w,k);
+        this->ilosc_wierszy = w;
+        this->ilosc_kolumn = k;
 
-        double** sheet = new double*[nlw];
-
-        for(int i=0; i<nlw;i++)
+        for(int i=0;i<w; i++)
         {
-            sheet[i]=new double[nlk];
-        }
-
-        this->macierz = this->aktualizacja_rozmiaru(nlw, nlk);
-        
-
-        for(int i=0;i<nlw; i++)
-        {
-            for(int j=0;j<nlk; j++)
+            for(int j=0;j<k; j++)
             {
                 plik2>>a;
-                this->macierz[i][j] = a;
+                this->macierz[i][j].setDoubleValue(a);
             }
         }
-      
+        
     
     
-        this->ilosc_wierszy = nlw;
-        this->ilosc_kolumn = nlk;
+        
         plik2.close();
         return 0;
     }

@@ -1,6 +1,5 @@
 #include <iostream>
 #include "menu.h"
-#include "tablica_wysw.h"
 #include "tablica.h"
 #include <cstdlib>
 #include <stdlib.h>
@@ -22,27 +21,23 @@ void menu_tekst()
         cout<<"5-zmien wartosc w arkuszu"<<endl;
         cout<<"6-zmien rozmiar tablicy"<<endl;
         cout<<"7-wyczysc ekran"<<endl;
-        cout<<"8-dodaj wartosc do komorki"<<endl;
+        cout<<"8-dzialania matematyczne"<<endl;
         cout<<"9-wyjdz"<<endl;
-        cout<<"0-policz srednia"<<endl;
         cin>>wybor;
 }
-void wyswietl_menu(p_a arkusz)
+void wyswietl_menu(Arkusz arkusz)
 {
-    char decyzja;
-    double suma;
-    int numer_wiersza = 0;
-    int numer_kolumny = 0;
+    int w = 0; //wiersze
+    int k = 0; //kolumny
+    int wybor2;
     int err_change_value = 0;
     int err_add_value = 0;
     int err_file_save = 0;
     int err_file_read = 0;
     int err_liczenie_sredniej = 0;
-    int b = 0;
-    int k = 0;
-    int nlw = 0;    //nowa liczba wierszy
-    int nlk = 0;    //nowa liczba kolumn   
     double a=0;
+    char d;
+    int z = 0;
     string nazwa_pliku;
     do
     {
@@ -50,16 +45,17 @@ void wyswietl_menu(p_a arkusz)
         switch(wybor)
         {
             case 1: 
-                cout<<"Podaj liczbe wierszy"<<endl;
-                cin>>arkusz.ilosc_wierszy;
-                cout<<"Podaj liczbe kolumn"<<endl;
-                cin>>arkusz.ilosc_kolumn;
-                arkusz.macierz = tworzenie_tablicy(arkusz.ilosc_wierszy, arkusz.ilosc_kolumn);  
-                
+                cout<<"Podaj ilosc wierszy:";
+                cin>>w;
+                cout<<endl;
+                cout<<"Podaj ilosc kolumn:";
+                cin>>k;
+                arkusz.nowa_tablica(w, k);
+                system("clear");
             break;
-            
+         
             case 2: 
-                wyswietl_tab(arkusz);
+                arkusz.wyswietl_tab();
             break;
             
             case 3: 
@@ -100,10 +96,10 @@ void wyswietl_menu(p_a arkusz)
                 cout<<"Jaka wartosc chcesz wprowadzic?"<<endl;
                 cin>>a;
                 cout<<"Podaj numer wiersza"<<endl;
-                cin>>numer_wiersza;
+                cin>>w;
                 cout<<"Podaj numer kolumny"<<endl;
-                cin>>numer_kolumny;
-                err_change_value = arkusz.zmiana_wartosci(numer_wiersza, numer_kolumny, a);
+                cin>>k;
+                err_change_value = arkusz.zmiana_wartosci(w, k, a);
                 if(err_change_value==0)
                 {
                     cout<<"Powodzenie!"<<endl;
@@ -121,70 +117,81 @@ void wyswietl_menu(p_a arkusz)
                 
                 cout<<"Podaj nowa wielkosc arkusza"<<endl;
                 cout<<"Najpierw liczba wieszy:"<<endl;
-                cin>>nlw;
+                cin>>w;
                 cout<<"Teraz liczba kolumn:"<<endl;
-                cin>>nlk;
-                arkusz.macierz = arkusz.aktualizacja_rozmiaru(nlw, nlk);
-                arkusz.ilosc_wierszy = nlw;
-                arkusz.ilosc_kolumn = nlk;
+                cin>>k;
+                arkusz.zmiana_rozmiaru(w,k);
                 
                 break;
             
             case 7:
                 system("clear");
                 break;
-            
+          
             case 8:
-                cout<<"Podaj liczbe jaka chcesz dodac:";
-                cin>>a;
-                cout<<"Podaj numer wiersza"<<endl;
-                cin>>numer_wiersza;
-                cout<<"Podaj numer kolumny"<<endl;
-                cin>>numer_kolumny;
-                err_add_value = arkusz.dodawanie(numer_wiersza, numer_kolumny, a);
-                if(err_add_value==0)
+                cout<<"Co chcesz zrobic?"<<endl;
+                cout<<"1.Sumowanie wedlug wierszy"<<endl;
+                cout<<"2.Sumowanie wedlug kolumn"<<endl;
+                cout<<"3.Najwieksza wartosc w wierszu"<<endl;
+                cout<<"4.Najmniejsza wartosc w kolumnie"<<endl;
+                cout<<"5.Srednia wartosc wiersza/kolumny"<<endl;
+                cin>>wybor2;
+                switch(wybor2)
                 {
-                    cout<<"Powodzenie!"<<endl;
-                }
-                else
-                {
-                    cout<<"niepowodzenie"<<endl;
-                    cout<<"err_add_value"<<endl;
+                    case 1:
+                    cout<<"Który wiersz chcesz zsumować?"<<endl;
+                    cin>>w;
+                    a = arkusz.sumowanie_wierszy(w);
+                    cout<<"Wynik sumowania wiersza nr "<<w<<" to "<<a<<endl;
+                    break;
+
+                    case 2:
+                    cout<<"Która kolumne chcesz zsumować?"<<endl;
+                    cin>>k;
+                    a = arkusz.sumowanie_kolumn(k);
+                    cout<<"Wynik sumowania kolumny nr "<<k<<" to "<<a<<endl;
+                    break;
+
+                    case 3:
+                    cout<<"Podaj numer wiersza"<<endl;
+                    cin>>w;
+                    a = arkusz.naj_wart_wiersza(w);
+                    cout<<"Najwieksza wartosc wiersza nr "<<w<<" to "<<a<<endl;
+                    break;
+
+                    case 4:
+                    cout<<"Podaj numer kolumny"<<endl;
+                    cin>>k;
+                    a = arkusz.naj_wart_kolumny(k);
+                    cout<<"Najwieksza wartosc kolumny nr "<<k<<" to "<<a<<endl;
+                    break;
+
+                    case 5:
+                    cout<<"Chcesz policzyc srednia wartosc wiersza czy kolumny?"<<endl;
+                    cout<<"w/k:";
+                    cin>>d;
+                    cout<<endl;
+                    cout<<"Podaj numer:";
+                    cin>>z;
+                    cout<<endl;
+                    a = arkusz.srednia(z,d);
+                    if(d = 'w')
+                    {
+                        cout<<"Srednia wartosc wiersza nr "<<z<<" to "<<a<<endl;
+                    }
+                    else if(d = 'k')
+                    {
+                        cout<<"Srednia wartosc kolumny nr "<<z<<" to "<<a<<endl;
+                    }
+                    
+                    
+                    break;
                 }
                 break;
+                
             case 9:
                 system("clear");
                 break;
-            case 0:
-                do
-                {
-                    cout<<"Podaj liczby z jakich ma byc obliczona srednia:";
-                    k++;
-                    cin>>a;
-                    suma += a;
-                    cout<<"Jeszcze jedna liczba?"<<endl;
-                    cout<<"y/n"<<endl;
-                    cin>>decyzja;
-                } while (decyzja=='y');
-                
-                cout<<"Ktory wiersz?"<<endl;
-                cin>>numer_wiersza;
-
-                cout<<"Ktora kolumna?"<<endl;
-                cin>>numer_kolumny;
-                err_liczenie_sredniej = arkusz.liczenie_sredniej(numer_wiersza, numer_kolumny, suma, k);
-                if(err_liczenie_sredniej==0)
-                {
-                    cout<<"Powodzenie!"<<endl;
-                }
-                else
-                {
-                    cout<<"niepowodzenie"<<endl;
-                    cout<<"err_liczenie_sredniej"<<endl;
-                }
-                
-                break;
-            
             default:
                 cout<<"Podales zla liczbe, podaj ponownie"<<endl;
             
