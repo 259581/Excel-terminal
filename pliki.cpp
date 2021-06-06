@@ -23,7 +23,7 @@ int Arkusz::zapis(string nazwa_pliku)
         {
             for(int j=0; j<ilosc_kolumn; j++)
             {
-                plik1 << macierz[i][j].getDoubleValue()<<"\t";
+                plik1 << macierz[i][j]->getValue()<<"\t";
             }
             plik1 << endl;
         } 
@@ -42,23 +42,27 @@ int Arkusz::zapis(string nazwa_pliku)
 
 int Arkusz::odczyt(std::string nazwa_pliku) 
 {
+    
     int w=0;
     int k=0;
-    double a=0;
+    int* typk;
+    std::string a;
+    
     nazwa_pliku+=".txt";
+    
     ifstream(plik2);
     plik2.open(nazwa_pliku);
     if(plik2.good()==true)
     {
+      
        
-        
         plik2>>w;
         plik2>>k;
+        typk = typkolumny(k);
         
         
         
-        
-        this->macierz = aktualizacja_rozmiaru(w,k);
+        this->macierz = aktualizacja_rozmiaru(w, k, typk);
         this->ilosc_wierszy = w;
         this->ilosc_kolumn = k;
 
@@ -66,12 +70,12 @@ int Arkusz::odczyt(std::string nazwa_pliku)
         {
             for(int j=0;j<k; j++)
             {
-                plik2>>a;
-                this->macierz[i][j].setDoubleValue(a);
+                plik2 >> a;
+                macierz[i][j]->setValue(a);
             }
         }
         
-    
+        
     
         
         plik2.close();

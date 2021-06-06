@@ -13,6 +13,7 @@ int wybor;
 
 void menu_tekst()
 {
+        
         cout<<"Co chcesz zrobic? Podaj odpowiednia liczbe."<<endl;
         cout<<"1-stworz nowa tablice"<<endl;
         cout<<"2-wyswietl tablice"<<endl;
@@ -29,16 +30,19 @@ void wyswietl_menu(Arkusz arkusz)
 {
     int w = 0; //wiersze
     int k = 0; //kolumny
+    int *typk;
     int wybor2;
     int err_change_value = 0;
     int err_add_value = 0;
     int err_file_save = 0;
     int err_file_read = 0;
     int err_liczenie_sredniej = 0;
-    double a=0;
-    char d;
-    int z = 0;
     string nazwa_pliku;
+    string wartosc;
+    string pozwolenie;
+    double wynik;
+    string decyzja;
+    int num;
     do
     {
         menu_tekst();
@@ -50,8 +54,9 @@ void wyswietl_menu(Arkusz arkusz)
                 cout<<endl;
                 cout<<"Podaj ilosc kolumn:";
                 cin>>k;
-                arkusz.nowa_tablica(w, k);
-                system("clear");
+                typk = arkusz.typkolumny(k);
+                arkusz.nowa_tablica(w, k, typk);
+                //system("clear");
             break;
          
             case 2: 
@@ -77,6 +82,8 @@ void wyswietl_menu(Arkusz arkusz)
             case 4:
                 cout<<"Podaj nazwe pliku bez rozszerzenia, z ktorego chcesz odczytac arkusza"<<endl;
                 cin>>nazwa_pliku;
+                cout<<endl;
+                cout<<"Powinienes sprawdzic przed odczytaniem, jakie wartosci zawieraja poszczegolne kolumny!"<<endl;
                 err_file_read = arkusz.odczyt(nazwa_pliku);
                 if(err_file_read==0)
                 {
@@ -93,13 +100,14 @@ void wyswietl_menu(Arkusz arkusz)
             
             case 5:
                 
+                arkusz.jakakolumna(typk);
                 cout<<"Jaka wartosc chcesz wprowadzic?"<<endl;
-                cin>>a;
+                cin>>wartosc;
                 cout<<"Podaj numer wiersza"<<endl;
                 cin>>w;
                 cout<<"Podaj numer kolumny"<<endl;
                 cin>>k;
-                err_change_value = arkusz.zmiana_wartosci(w, k, a);
+                err_change_value = arkusz.zmiana_wartosci(w, k, wartosc);
                 if(err_change_value==0)
                 {
                     cout<<"Powodzenie!"<<endl;
@@ -114,13 +122,22 @@ void wyswietl_menu(Arkusz arkusz)
             
             case 6:
                 
-                
+                cout<<"Zmniejszajac wielkosc arkusz ryzykujesz utrate danych, czy chcesz kontynuowac?"<<endl;
+                cout<<"y/n"<<endl;
+                cin>>pozwolenie;
+                if(pozwolenie == "y")
+                {
                 cout<<"Podaj nowa wielkosc arkusza"<<endl;
                 cout<<"Najpierw liczba wieszy:"<<endl;
                 cin>>w;
                 cout<<"Teraz liczba kolumn:"<<endl;
                 cin>>k;
-                arkusz.zmiana_rozmiaru(w,k);
+                arkusz.zmiana_rozmiaru(w,k,typk);
+                }
+                else
+                {
+                    cout<<"nie wykonano zadnej czynnosci"<<endl;
+                }
                 
                 break;
             
@@ -139,56 +156,125 @@ void wyswietl_menu(Arkusz arkusz)
                 switch(wybor2)
                 {
                     case 1:
-                    cout<<"Który wiersz chcesz zsumować?"<<endl;
-                    cin>>w;
-                    a = arkusz.sumowanie_wierszy(w);
-                    cout<<"Wynik sumowania wiersza nr "<<w<<" to "<<a<<endl;
+                    cout<<"Mozna sumowac tylko wiersze z wartosciami liczbowymi, upewnij sie, ze wlasnie taki chcesz wykorzystac!"<<endl;
+                    arkusz.wyswietl_tab();
+                    cout<<endl;
+                    cout<<"Kontynuowac? Jesli nie ma wiersza z samymi liczbami to przerwij proces."<<endl;
+                    cout<<"y/n"<<endl;
+                    cin>>pozwolenie;
+                    if(pozwolenie == "y")
+                    {
+                        cout<<"Który wiersz chcesz zsumować?"<<endl;
+                        cin>>w;
+                        wynik = arkusz.sumowanie_wierszy(w);
+                        cout<<"Wynik sumowania wiersza nr "<<w<<" to "<<wynik<<endl;
+                    }
+                    else
+                    {
+                        cout<<"Procedura nie zostala wykonana"<<endl;
+                    }
+                    
                     break;
 
                     case 2:
-                    cout<<"Która kolumne chcesz zsumować?"<<endl;
-                    cin>>k;
-                    a = arkusz.sumowanie_kolumn(k);
-                    cout<<"Wynik sumowania kolumny nr "<<k<<" to "<<a<<endl;
+                    cout<<"Mozna sumowac tylko kolumny z wartosciami liczbowymi, upewnij sie, ze wlasnie takie chcesz wykorzystac!"<<endl;
+                    arkusz.wyswietl_tab();
+                    cout<<endl;
+                    cout<<"Kontynuowac? Jesli nie ma kolumny z samymi liczbami to przerwij proces."<<endl;
+                    cout<<"y/n"<<endl;
+                    cin>>pozwolenie;
+                    if(pozwolenie == "y")
+                    {
+                        cout<<"Która kolumne chcesz zsumować?"<<endl;
+                        cin>>k;
+                        wynik = arkusz.sumowanie_kolumn(k);
+                        cout<<"Wynik sumowania wiersza nr "<<k<<" to "<<wynik<<endl;
+                    }
+                    else
+                    {
+                        cout<<"Procedura nie zostala wykonana"<<endl;
+                    }
                     break;
 
                     case 3:
-                    cout<<"Podaj numer wiersza"<<endl;
-                    cin>>w;
-                    a = arkusz.naj_wart_wiersza(w);
-                    cout<<"Najwieksza wartosc wiersza nr "<<w<<" to "<<a<<endl;
+                    cout<<"Najwieksza wartosc mozna wylonic tylko z liczb!"<<endl;
+                    arkusz.wyswietl_tab();
+                    cout<<endl;
+                    cout<<"Kontynuowac? Jesli nie ma wiersza z samymi liczbami to przerwij proces."<<endl;
+                    cout<<"y/n"<<endl;
+                    cin>>pozwolenie;
+                    if(pozwolenie == "y")
+                    {
+                        cout<<"Podaj numer wiersza"<<endl;
+                        cin>>w;
+                        wynik = arkusz.naj_wart_wiersza(w);
+                        cout<<"Najwieksza wartosc wiersza nr "<<w<<" to "<<wynik<<endl;
+                    }
+                    else
+                    {
+                        cout<<"Procedura nie zostala wykonana"<<endl;
+                    }
+                    
                     break;
 
                     case 4:
-                    cout<<"Podaj numer kolumny"<<endl;
-                    cin>>k;
-                    a = arkusz.naj_wart_kolumny(k);
-                    cout<<"Najwieksza wartosc kolumny nr "<<k<<" to "<<a<<endl;
+                    cout<<"Najwieksza wartosc mozna wylonic tylko z liczb!"<<endl;
+                    arkusz.wyswietl_tab();
+                    cout<<endl;
+                    cout<<"Kontynuowac? Jesli nie ma kolumny z samymi liczbami to przerwij proces."<<endl;
+                    cout<<"y/n"<<endl;
+                    cin>>pozwolenie;
+                    if(pozwolenie == "y")
+                    {
+                        cout<<"Podaj numer kolumny"<<endl;
+                        cin>>k;
+                        wynik = arkusz.naj_wart_kolumny(k);
+                        cout<<"Najwieksza wartosc kolumny nr "<<k<<" to "<<wynik<<endl;
+                    }
+                    else
+                    {
+                        cout<<"Procedura nie zostala wykonana"<<endl;
+                    }
+                    
                     break;
 
                     case 5:
-                    cout<<"Chcesz policzyc srednia wartosc wiersza czy kolumny?"<<endl;
-                    cout<<"w/k:";
-                    cin>>d;
+                    cout<<"Srednia wartosc mozna policzyc tylko z liczb!"<<endl;
+                    arkusz.wyswietl_tab();
                     cout<<endl;
-                    cout<<"Podaj numer:";
-                    cin>>z;
-                    cout<<endl;
-                    a = arkusz.srednia(z,d);
-                    if(d = 'w')
+                    cout<<"Kontynuowac? Jesli nie ma kolumny lub wiersza z samymi liczbami to przerwij proces."<<endl;
+                    cout<<"y/n"<<endl;
+                    cin>>pozwolenie;
+                    if(pozwolenie == "y")
                     {
-                        cout<<"Srednia wartosc wiersza nr "<<z<<" to "<<a<<endl;
-                    }
-                    else if(d = 'k')
-                    {
-                        cout<<"Srednia wartosc kolumny nr "<<z<<" to "<<a<<endl;
-                    }
+                        cout<<"Chcesz policzyc srednia wartosc wiersza czy kolumny?"<<endl;
+                        cout<<"w/k:";
+                        cin>>decyzja;
+                        cout<<endl;
+                        cout<<"Podaj numer:";
+                        cin>>num;
+                        cout<<endl;
+                        wynik = arkusz.srednia(num,decyzja);
+                        if(decyzja == "w")
+                        {
+                            cout<<"Srednia wartosc wiersza nr "<<num<<" to "<<wynik<<endl;
+                        }
+                        else if(decyzja == "k")
+                        {
+                            cout<<"Srednia wartosc kolumny nr "<<num<<" to "<<wynik<<endl;
+                        }
                     
+                    }
+                    else
+                    {
+                        cout<<"Procedura nie zostala wykonana"<<endl;
+                    }
                     
                     break;
+                    
                 }
                 break;
-                
+               
             case 9:
                 system("clear");
                 break;
@@ -198,4 +284,34 @@ void wyswietl_menu(Arkusz arkusz)
         }
     }
     while(wybor != 9);
+}
+
+int* Arkusz::typkolumny(int k)
+{
+    int *tk = new int[k];
+    cout<<"1-liczba"<<endl;
+    cout<<"0-string"<<endl;
+    for(int i=0; i<k; i++)
+    {
+        cout<<"kolumna:"<<i+1<<endl;
+        cin>>tk[i];
+    }
+    return tk;
+}
+
+void Arkusz::jakakolumna(int* tk)
+{
+    
+    for(int i=0; i<ilosc_kolumn; i++)
+    {
+        if(tk[i]==1)
+        {
+            cout<<"kolumna nr: "<<i+1<<"to kolumna liczbowa"<<endl;
+        }
+
+        if(tk[i]==0)
+        {
+            cout<<"kolumna nr: "<<i+1<<"to kolumna tekstowa"<<endl;
+        }
+    }
 }

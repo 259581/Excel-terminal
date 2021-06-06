@@ -11,8 +11,7 @@ void Arkusz::wyswietl_tab()
         {
             for(int j=0; j<ilosc_kolumn; j++)
             {
-                cout<<macierz[i][j].getDoubleValue()<<'\t';
-
+                cout<<macierz[i][j]->getValue()<<"\t";
             }
          cout<<endl;
         }
