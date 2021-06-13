@@ -41,7 +41,7 @@ class Cellstring: public Cell
    * @brief Zmienna typu string, która odpowiada jednej komórce arkusza.
    * 
    */
-  std::string polestring = "p";
+  std::string polestring = "*";
 
 public:
   

@@ -56,10 +56,12 @@ void wyswietl_menu(Arkusz arkusz)
                 cin>>k;
                 typk = arkusz.typkolumny(k);
                 arkusz.nowa_tablica(w, k, typk);
-                //system("clear");
+                system("clear");
+                cout<<"Arkusz został utworzony!"<<endl;
             break;
          
             case 2: 
+                system("clear");
                 arkusz.wyswietl_tab();
             break;
             
@@ -91,8 +93,8 @@ void wyswietl_menu(Arkusz arkusz)
                 }
                 else
                 {
-                    cout<<"blad. operacja nie zostala wykonana"<<endl;
-                    cout<<"err_file_save"<<endl;
+                    cout<<"Blad, operacja nie zostala wykonana"<<endl;
+                    cout<<"nieprawidlowa nazwa pliku"<<endl;
                 }
                 
                 
@@ -152,6 +154,7 @@ void wyswietl_menu(Arkusz arkusz)
                 cout<<"3.Najwieksza wartosc w wierszu"<<endl;
                 cout<<"4.Najmniejsza wartosc w kolumnie"<<endl;
                 cout<<"5.Srednia wartosc wiersza/kolumny"<<endl;
+                cout<<"6.Cofnij"<<endl;
                 cin>>wybor2;
                 switch(wybor2)
                 {
