@@ -4,26 +4,28 @@
 		-wydawanie poleceń programowi
 		-wywoływanie funkcji		
 ## arkusz:
-		-stworzenie nowego arkusza
-			int ** tworzenie_tablicy(int ilosc_wierszy, int ilosc_kolumn);
+		-stworzenie nowego arkusza			
 		
-		-regulacja wielkości tablicy
-			double **aktualizacja_rozmiaru(int nlw, int nlk);
+		-regulacja wielkości tablicy			
 			
 		-aktualizacja zawartości poszczególnych komórek
-			int zmiana_wartosci(int numer_wiersza, int numer_kolumny, double a);
-		-liczenie średniej z konkretnych liczb
-			int liczenie_sredniej(int numer_wiersza, int numer_kolumny, double suma, int ilosc_liczb);
+			
+		-działania matematyczne na kolumnach
+		
+		-wyświetlanie arkusza
+		
+			
 ## klasa
-		-klasa p_a na podstawie, której opiera się działanie programu
-		-został stworzony obiekt "arkusz"	
-			p_a arkusz;
+		-klasa Arkusz na podstawie, której opiera się działanie programu
+		
+		-został stworzony obiekt "arkusz", który jest potrójnym wskaźnikiem do obiektu klasy Cell, która pełni funkcje interfejsu w programie	
+		
+		-klasy Cellstring i Celldouble dziedziczą po klasie Cell
+
 ## pliki:
 		-zapis arkusza do pliku tekstowego
-			void zapis(class p_a arkusz, std::string nazwa_pliku);
 		
-		-odczyt arkusza z pliku tekstowego 
-			double** odczyt(class p_a *arkusz std::string nazwa_pliku);	
+		-odczyt arkusza z pliku tekstowego 	
 		
 			
 		
